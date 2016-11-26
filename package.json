@@ -13,7 +13,11 @@
     "store",
     "react"
   ],
-  "author": "Klayton Faria <klayton.souza+npm@gmail.com> (klayton.ninja)",
+  "authors": [
+   "Klayton Faria <klayton.souza@gmail.com>",
+   "Emilio Aiolfi <emilio.aiolfi@gmail.com>",
+   "Alisson Suzigan <alisson.suzigan@gmail.com>" 
+  ], 
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AzkabanCoders/zstore/issues"
