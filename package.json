@@ -1,0 +1,22 @@
+{
+  "name": "zstore",
+  "version": "0.0.0",
+  "description": "Store web-client",  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AzkabanCoders/zstore.git"
+  },
+  "keywords": [
+    "store",
+    "react"
+  ],
+  "author": "Klayton Faria <klayton.souza+npm@gmail.com> (klayton.ninja)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AzkabanCoders/zstore/issues"
+  },
+  "homepage": "https://github.com/AzkabanCoders/zstore#readme"
+}
