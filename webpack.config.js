@@ -1,13 +1,14 @@
 'use strict';
-let ExtractTextPlugin = require('extract-text-webpack-plugin'),    
+let webpack = require('webpack'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
     autoprefixer = require('autoprefixer'),
-    path = require('path');
+    path = require('path'),
+    DashboardPlugin = require('webpack-dashboard/plugin');
 
 module.exports = {
     context: path.join(__dirname, './src'),
     entry: {
-        jsx: './index.js',
-        html: './index.html',
+        app: './client/index',
         vendor: [
             'react',
             'react-dom',
@@ -18,8 +19,7 @@ module.exports = {
         ]
     },
     output: {
-        path: path.join(__dirname, './build/'),
-        filename: 'bundle.js',
+        filename: './build/js/app.js'
     },
     module: {
         loaders: [
@@ -29,10 +29,15 @@ module.exports = {
             },
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,                
-                loaders: ['react-hot', 'babel'],
+                loader: 'react-hot',
+            },
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
                 query: {
-                    presets: ['es2015', 'react']
+                  presets: ['es2015','react'],
+                  plugins: ['transform-runtime']
                 }
             },
             {
@@ -55,15 +60,16 @@ module.exports = {
     devtool: 'source-map',
     postcss: [ autoprefixer({ browsers: ['last 2 versions', 'ie 7-8', 'Firefox > 20'] }) ],
     plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
+        new DashboardPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "js/vendor.bundle.js"),    
-        new ExtractTextPlugin('/style/app.css', {
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.CommonsChunkPlugin("vendor", "./build/js/vendor.js"),
+        new ExtractTextPlugin('./build/style/app.css', {
             allChunks: true
         }),
     ],
     devServer: {
-        contentBase: './client',
+        contentBase: './',
         hot: true
     }
 };
