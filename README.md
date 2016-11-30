@@ -16,7 +16,7 @@ $ npm start
 
 ### Developement mode
 ```
-$ npm start
+$ npm run dev
 ```
 
 ### Production mode
