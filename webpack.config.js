@@ -1,75 +1,84 @@
-'use strict';
-let webpack = require('webpack'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin'),
-    autoprefixer = require('autoprefixer'),
-    path = require('path'),
-    DashboardPlugin = require('webpack-dashboard/plugin');
+const plugins = require('./webpack/plugins');
+
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProd = nodeEnv === 'production';
+const sourcePath = `${__dirname}/src/client`;
+const staticsPath = `${__dirname}/static`;
+
 
 module.exports = {
-    context: path.join(__dirname, './src'),
-    entry: {
-        app: './client/index',
-        vendor: [
-            'react',
-            'react-dom',
-            'react-redux',
-            'react-router',
-            'react-router-redux',
-            'redux'
+  devtool: 'source-map',
+  context: sourcePath,
+  entry: {
+    app: './index.jsx',
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'react-router-redux',
+      'redux'
+    ]
+  },
+  output: {
+    path: staticsPath,
+    filename: '[name].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        use: 'file-loader',
+        query: {
+          name: '[name].[ext]'
+        }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          'css-loader'
         ]
-    },
-    output: {
-        filename: './build/js/app.js'
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.html$/,
-                loader: 'file?name=[name].[ext]'
-            },
-            {
-                test: /\.jsx?$/,
-                loader: 'react-hot',
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                  presets: ['es2015','react'],
-                  plugins: ['transform-runtime']
-                }
-            },
-            {
-                test: /\-font\.json$/,
-                loader: ExtractTextPlugin.extract('css!sass!fontgen')
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('css!postcss!sass')
-            },
-            {
-                test: /\.json/,
-                loader: 'json'
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx', '.scss', '.json']
-    },
-    devtool: 'source-map',
-    postcss: [ autoprefixer({ browsers: ['last 2 versions', 'ie 7-8', 'Firefox > 20'] }) ],
-    plugins: [
-        new DashboardPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "./build/js/vendor.js"),
-        new ExtractTextPlugin('./build/style/app.css', {
-            allChunks: true
-        }),
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [
+          'babel-loader'
+        ],
+      },
     ],
-    devServer: {
-        contentBase: './',
-        hot: true
-    }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    modules: [
+      `${__dirname}/node_modules`,
+      sourcePath
+    ]
+  },
+  plugins,
+  devServer: {
+    contentBase: './src/client',
+    historyApiFallback: true,
+    port: 3000,
+    compress: isProd,
+    inline: !isProd,
+    hot: !isProd,
+    stats: {
+      assets: true,
+      children: false,
+      chunks: false,
+      hash: false,
+      modules: false,
+      publicPath: false,
+      timings: true,
+      version: false,
+      warnings: true,
+      colors: {
+        green: '\u001b[32m',
+      }
+    },
+  }
 };
