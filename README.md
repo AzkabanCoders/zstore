@@ -30,7 +30,7 @@ $ npm run prod
 $ npm run build
 ```
 
-#### Code structure
+## Code structure
 ```
 .
 ├── LICENSE
