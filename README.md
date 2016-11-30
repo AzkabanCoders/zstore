@@ -1,5 +1,34 @@
-# zstore
+# zstore (wip)
 Store web-client
+
+## Installing
+
+```
+$ npm install
+```
+
+## Running
+
+### Start universal mode (with node render layer running)
+```
+$ npm start
+```
+
+### Developement mode
+```
+$ npm start
+```
+
+### Production mode
+
+```
+$ npm run prod
+```
+
+## Building (production)
+```
+$ npm run build
+```
 
 #### Code structure
 ```
@@ -56,3 +85,6 @@ Store web-client
         ├── index.js
         └── server.js
 ```
+# License
+
+[MIT](License.md)
