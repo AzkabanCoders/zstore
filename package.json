@@ -50,6 +50,7 @@
     "webpack-dashboard": "^0.2.0"
   },
   "dependencies": {
+    "jsdom": "9.8.3",
     "react": "15.3.1",
     "react-dom": "15.3.1",
     "react-redux": "4.4.6",
