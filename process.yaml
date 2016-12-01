@@ -1,0 +1,11 @@
+# PM2 SETTINGS
+apps:
+  - script   : ./src/server/index.js
+    name     : 'zstore'
+    instances: 5
+    exec_mode: cluster
+    watch  : 'src/server'
+    env    :
+      NODE_ENV: development
+    env_production:
+      NODE_ENV: production
